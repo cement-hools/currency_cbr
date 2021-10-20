@@ -1,16 +1,10 @@
-from django.shortcuts import render
-from rest_framework.pagination import LimitOffsetPagination, \
-    PageNumberPagination
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from api.models import Currency
 from api.serializers import CurrencySerializer
 
 
-class CurrencyViewSet(ModelViewSet):
-    """."""
+class CurrencyViewSet(ReadOnlyModelViewSet):
+    """Список валют и просмотр отдельной валюты."""
     queryset = Currency.objects.all()
     serializer_class = CurrencySerializer
-    # pagination_class = PageNumberPagination
-    # PageNumberPagination.page_size = 10
-

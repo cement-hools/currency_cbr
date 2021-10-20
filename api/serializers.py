@@ -4,7 +4,7 @@ from api.models import Currency
 
 
 class CurrencySerializer(ModelSerializer):
-    """."""
+    """Сериалайзер валюты."""
 
     class Meta:
         model = Currency
