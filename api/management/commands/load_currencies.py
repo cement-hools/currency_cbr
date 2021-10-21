@@ -1,6 +1,6 @@
 import requests
 from django.core.management import BaseCommand
-from django.db import transaction, IntegrityError, connection
+from django.db import IntegrityError
 
 from api.models import Currency
 
@@ -11,13 +11,13 @@ class Command(BaseCommand):
         data = requests.get(url).json()
         currencies = data.get('Valute')
         if not currencies:
-            self.stdout.write(
-                self.style.SUCCESS('Ошибка подключения'))
-            return
+            return self.stdout.write(
+                self.style.WARNING('Ошибка подключения'))
 
         currencies_set = Currency.objects.all()
 
         if currencies_set.exists():
+            print('Обновлекние курса валют')
             for currency in currencies_set:
                 char_code = currency.name.split()[-1]
                 currency_data = currencies.get(char_code)
@@ -31,9 +31,10 @@ class Command(BaseCommand):
                 Currency.objects.bulk_update(currencies_set, ['rate'])
             except IntegrityError as err:
                 self.stdout.write(
-                    self.style.WARNING(f'Данные для не обновлены')
-                    )
+                    self.style.WARNING(f'Данные не обновлены')
+                )
         else:
+            print('Загрузка курса валют')
             currencies_list = []
             for currency in currencies.values():
                 name = currency.get('Name')
@@ -53,11 +54,10 @@ class Command(BaseCommand):
                 Currency.objects.bulk_create(currencies_list)
             except IntegrityError as err:
                 self.stdout.write(
-                    self.style.WARNING(f'Данные для не сохранены')
+                    self.style.WARNING(f'Данные не сохранены')
                 )
 
         self.stdout.write(self.style.SUCCESS('Курс валют успешно загружен'))
 
     def handle(self, *args, **options):
         self.load_currencies()
-        print(len(connection.queries))
