@@ -43,7 +43,8 @@ python manage.py load_currencies
     "rate": "70.9904"
 }
 ```
-- **GET**```/api/v1/currency/{currency_id/``` Показать курс для  переданого id. (так как было в тз. полностью повторяет ```/api/v1/currencies/{currency_id/```)
+- **GET**```/api/v1/currency/{currency_id/``` Показать курс для  переданого id. 
+(так как было в тз. полностью повторяет ```/api/v1/currencies/{currency_id/```)
 
 ## Установка и запуск на сервере разработчика
 1. Клонировать репозиторий
