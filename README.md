@@ -15,7 +15,8 @@ https://www.cbr-xml-daily.ru/daily_json.js
 python manage.py load_currencies
 ```
 
-- **GET**```/api/v1/currencies/``` Показать все записи из таблицы курса волют. 10 объектов на странице, параметр страницы ```page```
+- **GET**```/api/v1/currencies/``` Показать все записи из таблицы курса волют. 
+10 объектов на странице, параметр страницы ```page```
 
 Ответ
 ```json
@@ -32,7 +33,7 @@ python manage.py load_currencies
       ...
 ```
 
-- **GET**```/api/v1/currencies/{currency_id/``` Показать курс для  передоного id. (REST frendly)
+- **GET**```/api/v1/currencies/{currency_id/``` Показать курс для  переданого id. (REST frendly)
 
 Ответ
 ```json
@@ -42,7 +43,7 @@ python manage.py load_currencies
     "rate": "70.9904"
 }
 ```
-- **GET**```/api/v1/currency/{currency_id/``` Показать курс для  передоного id. (так как было в тз. полностью повторяет ```/api/v1/currencies/{currency_id/```)
+- **GET**```/api/v1/currency/{currency_id/``` Показать курс для  переданого id. (так как было в тз. полностью повторяет ```/api/v1/currencies/{currency_id/```)
 
 ## Установка и запуск на сервере разработчика
 1. Клонировать репозиторий
@@ -70,6 +71,10 @@ python manage.py load_currencies
 4. Выполните миграции
    ```
    python manage.py migrate
+   ```
+4. Загрузить курс валют
+   ```
+   python manage.py load_currencies
    ```
 5. Создать супер юзера
    ```
@@ -103,9 +108,13 @@ python manage.py load_currencies
     ```
     docker-compose exec web python manage.py migrate --noinput
     ```
-5. Зайти в контейнер и создать супер юзера.
+5. Зайти в контейнер и выполнить миграции
     ```
-    docker-compose exec web python manage.py createsuperuser
+    docker-compose exec web python manage.py migrate --noinput
+    ```
+6. Зайти в контейнер и выполнить загрузку курса валют.
+    ```
+    docker-compose exec web python manage.py load_currencies
     ```
 7. Проект доступен 
    ```
