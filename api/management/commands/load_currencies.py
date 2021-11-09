@@ -17,7 +17,7 @@ class Command(BaseCommand):
         currencies_set = Currency.objects.all()
 
         if currencies_set.exists():
-            print('Обновлекние курса валют')
+            print('Обновление курса валют')
             for currency in currencies_set:
                 char_code = currency.name.split()[-1]
                 currency_data = currencies.get(char_code)
